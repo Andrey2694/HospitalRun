@@ -2,16 +2,17 @@ package pages;
 
 import base.BasePage;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 import utils.RandomNumber;
 
-import java.security.Key;
+import java.time.Duration;
 import java.time.LocalDate;
-
-import static java.lang.Thread.sleep;
+import java.util.List;
 
 public class MedicationEditPage extends BasePage {
     @FindBy(xpath = "//input[contains(@id,'patientTypeAhead-ember')]")
@@ -50,24 +51,39 @@ public class MedicationEditPage extends BasePage {
 
     @Step("Selected name of patient")
     public void fillPatientField() {
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         patientField.sendKeys("Test Patient");
-//        patientNumber.click();
+
+        while (true) {
+            List<WebElement> elements = getDriver().findElements(By.xpath("//pre[text()='Test Patient']"));
+            patientField.sendKeys(Keys.BACK_SPACE);
+            patientField.sendKeys("t");
+            if (elements.size() > 0) {
+                patientNumber.click();
+                break;
+            }
+        }
     }
 
     @Step("Selected date for visit")
     public void selectVisitData() {
-
+        Select select = new Select(visitList);
+        select.selectByIndex(1);
     }
 
     @Step("Selected medication for patient")
     public void fillMedicationField() {
-        medicationField.sendKeys("Pra");
-        try {
-            sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        medicationField.sendKeys("Pramoxine");
+
+        while (true) {
+            List<WebElement> elements = getDriver().findElements(By.xpath("//pre[text()='Pramoxine']"));
+            medicationField.sendKeys(Keys.BACK_SPACE);
+            medicationField.sendKeys("e");
+            if (elements.size() > 0) {
+                medicationNumber.click();
+                break;
+            }
         }
-        medicationNumber.sendKeys("moxine");
     }
 
     @Step("Filled prescription")
@@ -96,7 +112,7 @@ public class MedicationEditPage extends BasePage {
         refillsField.sendKeys(String.valueOf(randomNumber));
     }
 
-    @Step("Added form")
+    @Step("Form was added")
     public void clickOnAddRequestButton() {
         addRequestButton.click();
     }
