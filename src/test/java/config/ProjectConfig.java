@@ -10,6 +10,11 @@ import org.aeonbits.owner.Config;
 public interface ProjectConfig extends Config {
     @Key("username")
     String username();
+
     @Key("password")
     String password();
+
+    @Key("browser")
+    @DefaultValue("chrome")
+    String browser();
 }

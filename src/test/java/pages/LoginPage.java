@@ -1,6 +1,7 @@
 package pages;
 
 import base.BasePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,12 +17,16 @@ public class LoginPage extends BasePage {
     @FindBy(className = "btn")
     private WebElement button;
 
+    @FindBy(className = "form-signin-heading")
+    private WebElement formTitle;
+
     public LoginPage(WebDriver driver) {
         super(driver);
-        getDriver().get("http://demo.hospitalrun.io/");
     }
 
+    @Step("login to Account")
     public void loginToAccount(String loginValue, String passwordValue) {
+        getDriver().get("http://demo.hospitalrun.io/");
         login.sendKeys(loginValue);
         password.sendKeys(passwordValue);
         button.click();
@@ -29,5 +34,9 @@ public class LoginPage extends BasePage {
 
     public String getTextAlertNotification() {
         return getDriver().findElement(By.className("alert")).getText();
+    }
+
+    public String getFormTitle() {
+        return formTitle.getText();
     }
 }
