@@ -7,7 +7,7 @@
 
 Запуск тестов происходит через консоль
 
-Запуск в chrome
+Запуск в Chrome
 
 ```bash
 mvn test
@@ -23,3 +23,12 @@ mvn test -Dbrowser=firefox
 ```bash
 allure serve allure-results
 ```
+
+### Анализ результатов в Allure
+![alt "Allure"](img/AllureReport.png)
+
+### Тест Кейсы
+![TestCase](img/TestCase1.png)
+![TestCase](img/TestCase2-3.png)
+![TestCase](img/TestCase4.png)
+
