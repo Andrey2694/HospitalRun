@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class MainPage extends BasePage {
+    // TODO make all elements public
     @FindBy(className = "view-current-title")
     private WebElement mainPageTitle;
 
@@ -35,32 +36,39 @@ public class MainPage extends BasePage {
         super(driver);
     }
 
+    // TODO no need in such simple methods, just make the field public and perform that action in the test directly
     public String getMainPageTitle() {
         return mainPageTitle.getText();
     }
 
+    // TODO we can do logout not only on the main page, this feature is bound to navigation component which is accessible on all pages
     @Step("LogOut from account")
     public void logOut() {
         settingsTriggerButton.click();
         logOutButton.click();
     }
 
+    // TODO no need in such simple methods, just make the field public and perform that action in the test directly
     public void clickOnMedicationButton() {
         medicationLink.click();
     }
 
+    // TODO no need in such simple methods, just make the field public and access the field directly in the test
     public WebElement getCompletedLinkElement() {
         return completedLink;
     }
 
+    // TODO no need in such simple methods, just make the field public and access the field directly in the test
     public WebElement getRequestsLinkElement() {
         return requestsLink;
     }
 
+    // TODO no need in such simple methods, just make the field public and access the field directly in the test
     public WebElement getNewRequestLinkElement() {
         return newRequestLink;
     }
 
+    // TODO no need in such simple methods, just make the field public and access the field directly in the test
     public WebElement getReturnMedicationLinkElement() {
         return returnMedicationLink;
     }

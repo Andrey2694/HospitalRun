@@ -9,12 +9,21 @@ import pages.MedicationPage;
 import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
 
+// todo should be placed in the tests folder
 public class HospitalTests extends BaseTest {
+    // todo no need to create separate variables for it, just access directly
     private final String username = Project.config.username();
     private final String password = Project.config.password();
 
     @Test
     public void loginWithCorrectCredentials() {
+        // todo this is not a good practice to access webdriver directly in the tests
+        // for page object it is better to have one class that contains all of them and access them with help of an instance of that class
+        // that class is Browser
+        // here is how your test might look in case of using that strategy:
+        // browser.loginPage().open();
+        // browser.loginPage().submitLoginFormWithData(Project.config.username(), Project.config.password());
+        // browser.mainPage().waitForPresent();
         new LoginPage(getDriver()).loginToAccount(username, password);
 
         step("Assert that User is logged in and Patient Listing page is displayed", () -> {
@@ -25,8 +34,16 @@ public class HospitalTests extends BaseTest {
     @Test
     public void loginWithInvalidCredentials() {
         LoginPage loginPage = new LoginPage(getDriver());
-        loginPage.loginToAccount("hello", "world");
+        // todo we are not actually doing a login, but submitting the login form is invalid data, that's why loginToAccount is not a good name for this method
+        // using instance of browser class, the test is going to look like this:
+        // browser.loginPage().open();
+        // browser.loginPage().submitLoginFormWithData("hello", "world");
+        // browser.loginPage().waitForUsernameOrPasswordIsIncorrectErrorToBePresent();
+        // browser.sleep(5000);
+        // assertThat(browser.mainPage().isPresent()).isFalse();
+        // assertThat(browser.loginPage().isPresent()).isTrue();
 
+        loginPage.loginToAccount("hello", "world");
         step("Assert that User is stayed on Login Page and Error message is displayed", () -> {
             assertThat(getDriver().getCurrentUrl()).isEqualTo("http://demo.hospitalrun.io/#/login");
             assertThat(loginPage.getTextAlertNotification()).isEqualTo("Username or password is incorrect.");
@@ -61,13 +78,19 @@ public class HospitalTests extends BaseTest {
         new MedicationPage(getDriver()).clickOnNewRequestButton();
         MedicationEditPage medicationEditPage = new MedicationEditPage(getDriver());
 
+        // todo what to fill?
         medicationEditPage.fillPatientField();
+        // todo what to fill?
         medicationEditPage.fillPrescriptionField();
+        // todo what to select?
         medicationEditPage.selectPrescriptionData();
+        // todo what to fill?
         medicationEditPage.fillQuantityField();
+        // todo what to fill?
         medicationEditPage.fillRefillsField();
+        // todo what to fill?
         medicationEditPage.fillMedicationField();
-        medicationEditPage.selectVisitData();
+        medicationEditPage.selectVisitData(); // todo which one?
         medicationEditPage.clickOnAddRequestButton();
 
         step("Assert that Medication Request Saved popup is displayed and" +
