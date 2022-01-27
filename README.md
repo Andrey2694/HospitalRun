@@ -1,7 +1,7 @@
 # Автотесты UI для тестового задания на сайте http://demo.hospitalrun.io/
 
 ## Используемые технологии и инструменты
-###Java,Selenium,TestNG,Maven,Allure Report,Owner,AssertJ
+Java,Selenium,TestNG,Maven,Allure Report,Owner,AssertJ
 
 ## Инструкция по запуску тестов
 
