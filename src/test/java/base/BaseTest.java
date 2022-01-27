@@ -29,6 +29,7 @@ public abstract class BaseTest {
         }
 
         driver.manage().window().setSize(new Dimension(1920, 1080));
+        driver.manage().deleteAllCookies();
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
     }

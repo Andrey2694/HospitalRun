@@ -6,6 +6,7 @@ import pages.MainPage;
 import pages.MedicationEditPage;
 import pages.MedicationPage;
 
+import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HospitalTests extends BaseTest {
@@ -16,7 +17,9 @@ public class HospitalTests extends BaseTest {
     public void loginWithCorrectCredentials() {
         new LoginPage(getDriver()).loginToAccount(username, password);
 
-//        assertThat(new MainPage(getDriver()).getMainPageTitle()).isEqualTo("Patient Listing");
+        step("Assert that User is logged in and Patient Listing page is displayed", () -> {
+            assertThat(new MainPage(getDriver()).getMainPageTitle()).isEqualTo("Patient Listing");
+        });
     }
 
     @Test
@@ -24,8 +27,10 @@ public class HospitalTests extends BaseTest {
         LoginPage loginPage = new LoginPage(getDriver());
         loginPage.loginToAccount("hello", "world");
 
-        assertThat(getDriver().getCurrentUrl()).isEqualTo("http://demo.hospitalrun.io/#/login");
-        assertThat(loginPage.getTextAlertNotification()).isEqualTo("Username or password is incorrect.");
+        step("Assert that User is stayed on Login Page and Error message is displayed", () -> {
+            assertThat(getDriver().getCurrentUrl()).isEqualTo("http://demo.hospitalrun.io/#/login");
+            assertThat(loginPage.getTextAlertNotification()).isEqualTo("Username or password is incorrect.");
+        });
     }
 
     @Test
@@ -33,8 +38,10 @@ public class HospitalTests extends BaseTest {
         loginWithCorrectCredentials();
         new MainPage(getDriver()).logOut();
 
-        assertThat(new LoginPage(getDriver()).getFormTitle()).isEqualTo("PLEASE SIGN IN");
-        assertThat(getDriver().getCurrentUrl()).isEqualTo("http://demo.hospitalrun.io/#/login");
+        step("Assert that User is logged out and Login Page is displayed", () -> {
+            assertThat(new LoginPage(getDriver()).getFormTitle()).isEqualTo("PLEASE SIGN IN");
+            assertThat(getDriver().getCurrentUrl()).isEqualTo("http://demo.hospitalrun.io/#/login");
+        });
     }
 
     @Test
@@ -43,24 +50,37 @@ public class HospitalTests extends BaseTest {
         MainPage mainPage = new MainPage(getDriver());
         mainPage.clickOnMedicationButton();
 
-        assertThat(mainPage.getRequestsLinkElement().isDisplayed()).isTrue();
-        assertThat(mainPage.getCompletedLinkElement().isDisplayed()).isTrue();
-        assertThat(mainPage.getNewRequestLinkElement().isDisplayed()).isTrue();
-        assertThat(mainPage.getReturnMedicationLinkElement().isDisplayed()).isTrue();
+        step("Assert that Medication Section contains next 4 items:" +
+                " Requests, Completed, New Request, Return Medication", () -> {
+            assertThat(mainPage.getRequestsLinkElement().isDisplayed()).isTrue();
+            assertThat(mainPage.getCompletedLinkElement().isDisplayed()).isTrue();
+            assertThat(mainPage.getNewRequestLinkElement().isDisplayed()).isTrue();
+            assertThat(mainPage.getReturnMedicationLinkElement().isDisplayed()).isTrue();
+        });
 
         new MedicationPage(getDriver()).clickOnNewRequestButton();
         MedicationEditPage medicationEditPage = new MedicationEditPage(getDriver());
 
         medicationEditPage.fillPatientField();
-        medicationEditPage.selectVisitData();
         medicationEditPage.fillPrescriptionField();
         medicationEditPage.selectPrescriptionData();
         medicationEditPage.fillQuantityField();
         medicationEditPage.fillRefillsField();
         medicationEditPage.fillMedicationField();
+        medicationEditPage.selectVisitData();
         medicationEditPage.clickOnAddRequestButton();
 
+        step("Assert that Medication Request Saved popup is displayed and" +
+                "contains next items: Ok button and Cross button", () -> {
+            assertThat(medicationEditPage.getModalTitle()).isEqualTo("Medication Request Saved");
+            assertThat(medicationEditPage.getCloseModalButton().isDisplayed()).isTrue();
+        });
 
-        int i = 0;
+        medicationEditPage.clickOnSubmitModalButton();
+
+        step("Assert that Medication Request Saved pop up isn`t displayed and" +
+                "User stayed on New Medication Request Page", () -> {
+            assertThat(medicationEditPage.isModalDisplayed()).isTrue();
+        });
     }
 }

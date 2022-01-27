@@ -14,7 +14,7 @@ public class MedicationPage extends BasePage {
         super(driver);
     }
 
-    @Step("click on NewRequest button")
+    @Step("Click on NewRequest button")
     public void clickOnNewRequestButton() {
         newRequestButton.click();
     }

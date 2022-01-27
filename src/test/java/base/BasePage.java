@@ -16,7 +16,7 @@ public abstract class BasePage {
 
     protected WebDriverWait getWait() {
         if (wait == null) {
-            wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         }
         return wait;
     }
