@@ -34,7 +34,7 @@ public class LoginPage extends BasePage {
         getDriver().get(loginPageUrl);
     }
 
-    @Step("login to Account with userName = {loginValue} and password = {passwordValue} ")
+    @Step("login to Account with userName  \"{loginValue}\" and password \"{passwordValue}\"")
     public void submitLoginFormWithData(String loginValue, String passwordValue) {
         userNameField.sendKeys(loginValue);
         passwordField.sendKeys(passwordValue);

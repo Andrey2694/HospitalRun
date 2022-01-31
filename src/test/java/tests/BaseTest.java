@@ -2,6 +2,8 @@ package tests;
 
 import browsers.Browser;
 import helpers.ListenerTestNg;
+import org.testng.ITestContext;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
@@ -11,18 +13,18 @@ public abstract class BaseTest {
     protected Browser browser = new Browser();
 
     @BeforeSuite
-    public void openBrowser() {
+    public void openBrowser(ITestContext context) {
         browser.open("chrome");
+        context.setAttribute("browser", browser);
+    }
+
+    @AfterMethod
+    public void deleteCookies() {
+        browser.deleteCookies();
     }
 
     @AfterSuite
-    public void setDown() {
-        browser.getDriver().quit();
+    public void closeBrowser() {
+        browser.close();
     }
-
-//    @AfterMethod
-//    public void addAttachments() {
-//        AllureAttachments.addScreenshotAs("Last screenshot", browser.getDriver());
-//        AllureAttachments.addPageSource(browser.getDriver());
-//    }
 }

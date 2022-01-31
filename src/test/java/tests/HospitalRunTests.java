@@ -58,8 +58,8 @@ public class HospitalRunTests extends BaseTest {
         browser.hospitalRun().isUserLoggedIn = false;
     }
 
-    @Ignore
     @Feature("Add new Medication")
+    @Ignore
     @Test(dependsOnMethods = {"logOutFromAccount", "submitLoginFormWithInCorrectData", "submitLoginFormWithCorrectData"})
     public void addNewMedication() {
         if (!browser.hospitalRun().isUserLoggedIn) {
@@ -95,7 +95,11 @@ public class HospitalRunTests extends BaseTest {
 
         step("Assert that Medication Request Saved pop up isn`t displayed and" +
                 "User stayed on New Medication Request Page", () -> {
-            assertThat(browser.hospitalRun().medicationEditPage().isModalPresent()).isTrue();
+            assertThat(browser.hospitalRun().medicationEditPage().isModalNotPresent()).isTrue();
         });
+    }
+    @Test(invocationCount = 20)
+    public void someTest1() {
+        browser.hospitalRun().loginPage().open();
     }
 }

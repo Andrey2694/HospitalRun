@@ -26,21 +26,24 @@ public class Browser {
     }
 
     public void open(String browser) {
-        if (browser.equals("chrome") || Project.config.browser().equals("chrome")) {
+        if (Project.config.browser().equals("chrome") || browser.equals("chrome")) {
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
-        } else if (browser.equals("firefox") || Project.config.browser().equals("firefox")) {
+        } else if (Project.config.browser().equals("firefox") || browser.equals("firefox")) {
             WebDriverManager.firefoxdriver().setup();
             driver = new FirefoxDriver();
         }
 
         driver.manage().window().setSize(new Dimension(Project.config.browserWidth(), Project.config.browserHeight()));
-        driver.manage().deleteAllCookies();
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(Project.config.pageLoadTimeOut()));
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Project.config.implicitlyWait()));
     }
 
     public void deleteCookies() {
         driver.manage().deleteAllCookies();
+    }
+
+    public void close() {
+        driver.quit();
     }
 }

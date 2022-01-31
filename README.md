@@ -10,18 +10,18 @@ Java,Selenium,TestNG,Maven,Allure Report,Owner,AssertJ
 Запуск в Chrome
 
 ```bash
-mvn test
+mvn clean test
 ```
 Запуск в FireFox
 
 ```bash
-mvn test -Dbrowser=firefox
+mvn clean test -Dbrowser=firefox
 ```
 
 ### Serve report:
 
 ```bash
-allure serve allure-results
+allure serve target/allure-results
 ```
 
 ### Анализ результатов в Allure

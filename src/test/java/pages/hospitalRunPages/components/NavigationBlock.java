@@ -9,7 +9,7 @@ import pages.BasePage;
 
 public class NavigationBlock extends BasePage {
     @FindBy(className = "settings-trigger")
-    private WebElement navigationTriggerButton;
+    private WebElement settingsButton;
 
     @FindBy(className = "logout")
     private WebElement logOutButton;
@@ -22,7 +22,7 @@ public class NavigationBlock extends BasePage {
 
     @Step("LogOut from account")
     public void logOut() {
-        navigationTriggerButton.click();
+        settingsButton.click();
         logOutButton.click();
     }
 }

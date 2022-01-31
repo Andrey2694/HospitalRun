@@ -1,5 +1,6 @@
 package pages.hospitalRunPages;
 
+import config.Project;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import pages.BasePage;
@@ -11,8 +12,6 @@ import org.openqa.selenium.support.ui.Select;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
-
-import static java.lang.Thread.sleep;
 
 public class MedicationEditPage extends BasePage {
     @FindBy(xpath = "//input[contains(@id,'patientTypeAhead-ember')]")
@@ -93,11 +92,12 @@ public class MedicationEditPage extends BasePage {
                     patientField.sendKeys(Keys.BACK_SPACE);
                 }
             }
-            return new NoSuchElementException("element no found");
+            return new NoSuchElementException("element not found");
         });
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(Project.config.implicitlyWait()));
     }
 
-    @Step("Select free date for visit")
+    @Step("Select any free date for visit")
     public void selectAnyFreeDateForVisit() {
         Select select = new Select(visitList);
         select.selectByIndex(0);
@@ -111,7 +111,7 @@ public class MedicationEditPage extends BasePage {
         medicationNumber.click();
     }
 
-    @Step("Select prescription date")
+    @Step("Select prescription date {localDate}")
     public void selectPrescriptionData(LocalDate localDate) {
         String date = String.format("%s/%s/%s", localDate.getMonthValue(), localDate.getDayOfMonth(), localDate.getYear());
         dataField.clear();
@@ -123,7 +123,7 @@ public class MedicationEditPage extends BasePage {
         return getWait().until(ExpectedConditions.textToBe(By.className("modal-title"), titleText));
     }
 
-    public Boolean isModalPresent() {
+    public Boolean isModalNotPresent() {
         List<WebElement> list = getDriver().findElements(By.className("modal-title"));
         return list.size() == 0;
     }
