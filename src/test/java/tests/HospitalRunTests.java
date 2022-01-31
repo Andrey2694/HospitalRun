@@ -9,6 +9,7 @@ import utils.RandomValues;
 import java.time.LocalDate;
 
 import static io.qameta.allure.Allure.step;
+import static java.lang.Thread.sleep;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HospitalRunTests extends BaseTest {
@@ -97,9 +98,5 @@ public class HospitalRunTests extends BaseTest {
                 "User stayed on New Medication Request Page", () -> {
             assertThat(browser.hospitalRun().medicationEditPage().isModalNotPresent()).isTrue();
         });
-    }
-    @Test(invocationCount = 20)
-    public void someTest1() {
-        browser.hospitalRun().loginPage().open();
     }
 }
