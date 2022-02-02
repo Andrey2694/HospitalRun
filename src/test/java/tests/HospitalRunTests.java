@@ -1,6 +1,7 @@
 package tests;
 
 import config.Project;
+import helpers.DataProviderForLogin;
 import io.qameta.allure.Feature;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
@@ -98,5 +99,17 @@ public class HospitalRunTests extends BaseTest {
                 "User stayed on New Medication Request Page", () -> {
             assertThat(browser.hospitalRun().medicationEditPage().isModalNotPresent()).isTrue();
         });
+    }
+
+    @Test(dataProvider = "login", dataProviderClass = DataProviderForLogin.class)
+    public void dataProviderTest(String username, String password) {
+        browser.hospitalRun().loginPage().open();
+        browser.hospitalRun().loginPage().submitLoginFormWithData(username,password);
+    }
+
+    @Test(invocationCount = 5,threadPoolSize = 5)
+    public void someTest22() throws InterruptedException {
+        browser.hospitalRun().loginPage().open();
+        sleep(1000);
     }
 }
