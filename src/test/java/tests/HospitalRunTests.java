@@ -10,7 +10,6 @@ import utils.RandomValues;
 import java.time.LocalDate;
 
 import static io.qameta.allure.Allure.step;
-import static java.lang.Thread.sleep;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HospitalRunTests extends BaseTest {
@@ -105,11 +104,5 @@ public class HospitalRunTests extends BaseTest {
     public void dataProviderTest(String username, String password) {
         browser.hospitalRun().loginPage().open();
         browser.hospitalRun().loginPage().submitLoginFormWithData(username,password);
-    }
-
-    @Test(invocationCount = 5,threadPoolSize = 5)
-    public void someTest22() throws InterruptedException {
-        browser.hospitalRun().loginPage().open();
-        sleep(1000);
     }
 }
